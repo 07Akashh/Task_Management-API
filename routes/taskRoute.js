@@ -3,8 +3,6 @@ const router = express.Router();
 const Task = require('../models/taskModel');
 
 
-
-
 function formatDate(date) {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -13,11 +11,8 @@ function formatDate(date) {
 }
 
 
-
-
 router.post('/add', async (req, res) => {
     const { title, description, status, due_date } = req.body;
-
     try {
         const [day, month, year] = due_date.split('-').map(Number);
         const newTask = new Task({
@@ -36,7 +31,6 @@ router.post('/add', async (req, res) => {
 
 
 router.get('/tasks', async (req, res) => {
-    console.log('32502309859028305982309523')
     try {
         const tasks = await Task.find();
         const formattedTasks = tasks.map(task => ({
@@ -49,7 +43,7 @@ router.get('/tasks', async (req, res) => {
     }
 });
 
-router.get('/task/:taskId', async (req, res) => {
+router.get('/search/:taskId', async (req, res) => {
     const taskId = req.params.taskId;
     try {
         const task = await Task.findOne({ _id: taskId });
