@@ -112,16 +112,19 @@ Error handling has changed from Vapor 1 through 3, these are the keys to expect 
 
 Just to round it all off, here’s a few examples of how our response will return depending on whether you’re about to return a single item, a collection or a paginated result set.
 
-#### A single item
+#### A single task
 
 ```
 {
-    "data": {
-        "id": 1,
-        "name": "Shane Berry",
-        "email": "shane@berry.com"
-        "created_at": "2015-03-02T12:59:02+0100",
-        "updated_at": "2015-03-04T15:50:40+0100"
+    "task": {
+        "_id": "661d59e34cd03605d4ef9d7e",
+        "title": "task3",
+        "description": "completed 1part",
+        "status": "completed",
+        "due_date": "2029-02-01T18:30:00.000Z",
+        "createdAt": "2024-04-15T16:46:27.306Z",
+        "updatedAt": "2024-04-16T06:58:21.573Z",
+        "__v": 0
     }
 }
 ```
@@ -143,33 +146,42 @@ Just to round it all off, here’s a few examples of how our response will retur
 }
 ```
 
-#### A collection of items
+#### A collection of tasks
 
 ```
 {
     "data": [
-        {
-            "id": 1,
-            "name": "Shane Berry",
-            "email": "shane@berry.com"
-            "created_at": "2015-03-02T12:59:02+0100",
-            "updated_at": "2015-03-04T15:50:40+0100"
-        },
-        {
-            "id": 2,
-            "name": "Albert Henderson",
-            "email": "albert@henderson.com"
-            "created_at": "2015-03-02T12:59:02+0100",
-            "updated_at": "2015-03-04T15:50:40+0100"
-        },
-        {
-            "id": 3,
-            "name": "Miguel Phillips",
-            "email": "miguel@phillips.com"
-            "created_at": "2015-03-02T12:59:02+0100",
-            "updated_at": "2015-03-04T15:50:40+0100"
-        }
-    ]
+    {
+        "_id": "661d59e34cd03605d4ef9d7e",
+        "title": "task3",
+        "description": "completed 1part",
+        "status": "completed",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-15T16:46:27.306Z",
+        "updatedAt": "2024-04-16T06:58:21.573Z",
+        "__v": 0
+    },
+    {
+        "_id": "661e163b30a9f384bc7692b8",
+        "title": "task1",
+        "description": "this is the task",
+        "status": "pending",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-16T06:10:03.495Z",
+        "updatedAt": "2024-04-16T06:10:03.495Z",
+        "__v": 0
+    },
+    {
+        "_id": "661e1fecf0ca9eee33739b0a",
+        "title": "task111",
+        "description": "this is the task",
+        "status": "pending",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-16T06:51:24.965Z",
+        "updatedAt": "2024-04-16T06:51:24.965Z",
+        "__v": 0
+    }
+]
 }
 ```
 
@@ -177,21 +189,37 @@ Just to round it all off, here’s a few examples of how our response will retur
 ```
 {
     "data": [
-        {
-            "id": 1,
-            "name": "Shane Berry",
-            "email": "shane@berry.com"
-            "created_at": "2015-03-02T12:59:02+0100",
-            "updated_at": "2015-03-04T15:50:40+0100"
-        },
-        {
-            "id": 4,
-            "name": "Albert Henderson",
-            "email": "albert@henderson.com"
-            "created_at": "2015-03-02T12:59:02+0100",
-            "updated_at": "2015-03-04T15:50:40+0100"
-        }
-    ],
+    {
+        "_id": "661d59e34cd03605d4ef9d7e",
+        "title": "task3",
+        "description": "completed 1part",
+        "status": "completed",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-15T16:46:27.306Z",
+        "updatedAt": "2024-04-16T06:58:21.573Z",
+        "__v": 0
+    },
+    {
+        "_id": "661e163b30a9f384bc7692b8",
+        "title": "task1",
+        "description": "this is the task",
+        "status": "pending",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-16T06:10:03.495Z",
+        "updatedAt": "2024-04-16T06:10:03.495Z",
+        "__v": 0
+    },
+    {
+        "_id": "661e1fecf0ca9eee33739b0a",
+        "title": "task111",
+        "description": "this is the task",
+        "status": "pending",
+        "due_date": "02-02-2029",
+        "createdAt": "2024-04-16T06:51:24.965Z",
+        "updatedAt": "2024-04-16T06:51:24.965Z",
+        "__v": 0
+    }
+],
     "meta": {
         "pagination": {
             "currentPage": 2,
