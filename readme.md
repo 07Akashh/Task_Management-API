@@ -26,6 +26,8 @@ This is the Task Management API, a powerful tool for managing tasks efficiently 
 
 Endpoints with literal and readable URLs is what makes an API awesome. So to make everything easy and convenient for you, we have specified how you should do it. No more thinking about if it should be plural or where you should put your slug.
 
+Here is the documentation of postman: https://documenter.getpostman.com/view/33128498/2sA3Bj9Zoj#ea7bf517-adc5-4b53-ac15-6f151da017d6
+
 ### Anatomy of an endpoint
 
 The anatomy of an endpoint should look like this:
@@ -60,7 +62,7 @@ Now that we’ve learned about the anatomy of our endpoints and the different re
 | -------- | ---------------------------------------- | ---------------------------------------- |
 | `GET`    | `/api/tasks`                             | Retrieve all tasks.                      |
 | `POST`   | `/api/add`                               | Add a new post.                          |
-| `GET`    | `/api/posts/:taskId`                     | Retrieve task by taskID.                 |
+| `GET`    | `/api/search/:taskId`                    | Retrieve task by taskID.                 |
 | `PUT`    | `/api/update/:taskId`                    | Update data in task by taskId.           |
 | `DELETE` | `/api/delete/:taskId`                    | Delete task by taskId.                   |
 
@@ -128,7 +130,7 @@ Just to round it all off, here’s a few examples of how our response will retur
 
 ```
 {
-    "status": "ok"
+    "result": true
 }
 ```
 

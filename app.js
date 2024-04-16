@@ -11,10 +11,7 @@ const PORT = process.env.PORT ||3008;
 
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {console.log('Mongodb is connected Successfully')})
+mongoose.connect(process.env.MONGO_URL).then(() => {console.log('Mongodb is connected Successfully')})
 .catch((error) => {console.log(`Error in connecting MongoDb - ${error?.message || error}`)})
 
 app.use( "/api",tasksRouter);
