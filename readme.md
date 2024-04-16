@@ -67,15 +67,28 @@ Now that we’ve learned about the anatomy of our endpoints and the different re
 | `DELETE` | `/api/delete/:taskId`                    | Delete task by taskId.                   |
 
 
+## Validation
+
+The validations feature in our project enhances data integrity and security by enforcing constraints on the input data received by the API endpoints. With validations implemented, we ensure that incoming data meets certain criteria and is valid before processing it further. This helps prevent potential errors, improve data quality, and mitigate security risks.
+
+## Key Features
+
+- **Mandatory Field Validation**: Checks that all required fields (title, description, status, due_date) are present in the request body, returning a 400 status with an error message if any are missing.
+- **Due Date Validation**: Verifies that the due date provided in the request body is in the future, preventing tasks with past due dates from being created.
+- **Status Value Validation**: Ensures that the status value provided in the request body is one of the valid options (pending, in-progress, completed), rejecting requests with invalid status values.
+
+## Usage
+
+To utilize the validations feature:
+
+1. **Submit Valid Data**: When making requests to create tasks, ensure that all required fields are included in the request body and that the data provided adheres to the specified format and constraints.
+2. **Handle Validation Errors**: Handle validation errors gracefully on the client side by examining error messages returned by the API and providing appropriate feedback to users.
+3. **Maintain Data Integrity**: Maintain data integrity by enforcing validation rules consistently across all API endpoints.
+
+
 ## Pagination
 
-This is one of the tricky parts. Depending on what type of API you’re doing, pagination is implemented in different ways.
-
-If you're making an API to be used on the web, simple pagination using "pages" would work just fine. This is supported by our [Paginator package](https://github.com/nodes-vapor/paginator) and should work out of the box.
-
-But if you’re making an API for the mobile team(s) then you need to do it in a bit more complex way. Because devices usually have a "load more" feature, we can’t use the "pages" approach, since we could risk getting duplicates or even miss new entries. Therefore we return the collection in "batches" instead of pages.
-
-See the Response section for examples of how to return meta data for pagination.
+The pagination feature in our project allows users to navigate through large datasets efficiently by breaking them down into smaller, more manageable chunks of data called "pages." With pagination implemented, users can view data one page at a time, reducing load times and improving overall user experience.
 
 
 ### Errors
@@ -84,19 +97,14 @@ When errors occur the consumer will get a JSON payload verifying that an error o
 
 Error handling has changed from Vapor 1 through 3, these are the keys to expect from the different versions.
 
-#### Vapor 3
-
-| Endpoint   | Description                              |
-| ---------- | ---------------------------------------- |
-| `error`    | A boolean confirming an error occurred.  |
-| `reason`   | A description of the error that occurred. For some errors this value provides extra information on non-production environments. |
 
 #### Vapor 2
 
 | Endpoint   | Description                              |
 | ---------- | ---------------------------------------- |
 | `error`    | A boolean confirming an error occurred.  |
-| `reason`   | A description of the error that occurred. |
+| `reason`   | Task details are not provided.           |
+| `message`  | All the fields are mandatory             |
 | `metadata` | Any custom metadata that might be included. **Only** available on a non-production environment. |
 
 #### Vapor 1
@@ -141,7 +149,7 @@ Just to round it all off, here’s a few examples of how our response will retur
 
 ```
 {
-    "error": true,
+    "error": false,
     "reason": "Invalid email or password"
 }
 ```
@@ -188,49 +196,61 @@ Just to round it all off, here’s a few examples of how our response will retur
 #### A paginated collection of items
 ```
 {
-    "data": [
-    {
-        "_id": "661d59e34cd03605d4ef9d7e",
-        "title": "task3",
-        "description": "completed 1part",
-        "status": "completed",
-        "due_date": "02-02-2029",
-        "createdAt": "2024-04-15T16:46:27.306Z",
-        "updatedAt": "2024-04-16T06:58:21.573Z",
-        "__v": 0
-    },
-    {
-        "_id": "661e163b30a9f384bc7692b8",
-        "title": "task1",
-        "description": "this is the task",
-        "status": "pending",
-        "due_date": "02-02-2029",
-        "createdAt": "2024-04-16T06:10:03.495Z",
-        "updatedAt": "2024-04-16T06:10:03.495Z",
-        "__v": 0
-    },
-    {
-        "_id": "661e1fecf0ca9eee33739b0a",
-        "title": "task111",
-        "description": "this is the task",
-        "status": "pending",
-        "due_date": "02-02-2029",
-        "createdAt": "2024-04-16T06:51:24.965Z",
-        "updatedAt": "2024-04-16T06:51:24.965Z",
-        "__v": 0
-    }
-],
-    "meta": {
-        "pagination": {
-            "currentPage": 2,
-            "links": {
-                "next": "/api/users/?page=3&count=20",
-                "previous": "/api/users/?page=1&count=20"
-            },
-            "perPage": 20,
-            "total": 258,
-            "totalPages": 13
+    "tasks": [
+        {
+            "_id": "661d59e34cd03605d4ef9d7e",
+            "title": "task3",
+            "description": "completed 1part",
+            "status": "completed",
+            "due_date": "2029-02-01T18:30:00.000Z",
+            "createdAt": "2024-04-15T16:46:27.306Z",
+            "updatedAt": "2024-04-16T06:58:21.573Z",
+            "__v": 0
+        },
+        {
+            "_id": "661e163b30a9f384bc7692b8",
+            "title": "task1",
+            "description": "this is the task",
+            "status": "pending",
+            "due_date": "2029-02-01T18:30:00.000Z",
+            "createdAt": "2024-04-16T06:10:03.495Z",
+            "updatedAt": "2024-04-16T06:10:03.495Z",
+            "__v": 0
+        },
+        {
+            "_id": "661e1fecf0ca9eee33739b0a",
+            "title": "task111",
+            "description": "this is the task",
+            "status": "pending",
+            "due_date": "2029-02-01T18:30:00.000Z",
+            "createdAt": "2024-04-16T06:51:24.965Z",
+            "updatedAt": "2024-04-16T06:51:24.965Z",
+            "__v": 0
+        },
+        {
+            "_id": "661e6ea00f774308c110b767",
+            "title": "task111",
+            "description": "this is the",
+            "status": "completed",
+            "due_date": "2025-02-01T18:30:00.000Z",
+            "createdAt": "2024-04-16T12:27:13.002Z",
+            "updatedAt": "2024-04-16T12:27:13.002Z",
+            "__v": 0
+        },
+        {
+            "_id": "661e705c34e409aa08e474eb",
+            "title": "task111",
+            "description": "this is the",
+            "status": "completed",
+            "due_date": "2025-02-01T18:30:00.000Z",
+            "createdAt": "2024-04-16T12:34:38.298Z",
+            "updatedAt": "2024-04-16T12:34:38.298Z",
+            "__v": 0
         }
-    }
+    ],
+    "totalPages": 1,
+    "currentPage": 1,
+    "hasNextPage": false,
+    "hasPrevPage": false
 }
 ```
